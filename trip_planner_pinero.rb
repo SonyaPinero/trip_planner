@@ -67,7 +67,7 @@ class TripPlanner
     while index < (@duration)
     min_temp = @weather_info["list"][index]["temp"]["min"]
     max_temp = @weather_info["list"][index]["temp"]["max"]
-    condition = @weather_info["list"][index]["weather"][0]["description"]
+    condition = @weather_info["list"][index]["weather"][0]["main"]
     @forecast_array << Weather.new(min_temp, max_temp, condition)
     index += 1
     end
@@ -114,7 +114,7 @@ end
       day.appropriate_clothing
     end
 
-  return puts (recommended_clothes)
+  return puts (recommended_clothes.uniq)
 
   end
 
@@ -124,7 +124,7 @@ end
       day.appropriate_accessories
     end
 
-  return puts (recommended_acessories)
+  return puts (recommended_acessories.uniq)
   
   end
     
@@ -166,12 +166,12 @@ class Weather
 
   ACCESSORIES = [
     {
-      condition: "Rainy",
+      condition: "Rain",
       recommendation: [
         "galoshes", "umbrella"]
     },
     
-    {condition: "Snowy",
+    {condition: "Snow",
       recommendation: ["cap", "gloves"]
     },
 
@@ -248,7 +248,7 @@ def initialize(min_temp, max_temp, condition)
 
     appropriate_accessories << Weather.accessories_for(@condition)
 
-    return appropriate_accessories
+    return appropriate_accessories.uniq
 
   end
 
@@ -266,7 +266,7 @@ class User
 end
 
 trip_planner = TripPlanner.new
-Pry.start(binding)
+# Pry.start(binding)
 
 
 trip_planner.plan
